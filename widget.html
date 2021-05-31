@@ -188,7 +188,8 @@
                                     logInfo("settings.fieldName: " + settings.fieldName);
 
                                     const sum = function(previous, current) {
-                                        logInfo("In sum: " + current);
+                                        logInfo("In sum: ");
+                                        logInfo(current);
                                         if (!current.fields[settings.fieldName]) {
                                             return previous;
                                         }
@@ -197,7 +198,8 @@
                                     }
 
                                     const highest = function(previous, current) {
-                                        logInfo("In highest: " + current);
+                                        logInfo("In highest: ");
+                                        logInfo(current);
                                         if (!current.fields[settings.fieldName]) {
                                             return previous;
                                         }
@@ -206,7 +208,8 @@
                                     }
 
                                     const lowest = function(previous, current) {
-                                        logInfo("In lowest: " + current);
+                                        logInfo("In lowest: ");
+                                        logInfo(current);
                                         if (!current.fields[settings.fieldName]) {
                                             return previous;
                                         }
@@ -215,7 +218,8 @@
                                     }
 
                                     const countempty = function(previous, current) {
-                                        logInfo("In countempty: " + current);
+                                        logInfo("In countempty: ");
+                                        logInfo(current);
                                         if (current.fields[settings.fieldName]) {
                                             return previous;
                                         }
@@ -223,7 +227,8 @@
                                     }
 
                                     const countnotempty = function(previous, current) {
-                                        logInfo("In countnotempty: " + current);
+                                        logInfo("In countnotempty: ");
+                                        logInfo(current);
                                         if (!current.fields[settings.fieldName]) {
                                             return previous;
                                         }
