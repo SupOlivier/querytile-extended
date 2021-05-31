@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "SupOlivier-querytile-extended",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "name": "Query Title Extended",
   "description": "Query Title Widget, support all query type, with functions: sum, highest, lowest, average, ect. , on all integer or decimal values of your WI, with rounding and multiplication factor.",
   "publisher": "SupOlivier",
@@ -18,7 +18,7 @@
     "dashboard",
     "widget",
     "query",
-    "Title",
+    "title",
     "aggregation",
     "sum",
     "count",

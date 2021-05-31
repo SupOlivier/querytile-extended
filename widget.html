@@ -188,6 +188,7 @@
                                     logInfo("settings.fieldName: " + settings.fieldName);
 
                                     const sum = function(previous, current) {
+                                        logInfo("In sum: " + current);
                                         if (!current.fields[settings.fieldName]) {
                                             return previous;
                                         }
@@ -196,6 +197,7 @@
                                     }
 
                                     const highest = function(previous, current) {
+                                        logInfo("In highest: " + current);
                                         if (!current.fields[settings.fieldName]) {
                                             return previous;
                                         }
@@ -204,6 +206,7 @@
                                     }
 
                                     const lowest = function(previous, current) {
+                                        logInfo("In lowest: " + current);
                                         if (!current.fields[settings.fieldName]) {
                                             return previous;
                                         }
@@ -212,6 +215,7 @@
                                     }
 
                                     const countempty = function(previous, current) {
+                                        logInfo("In countempty: " + current);
                                         if (current.fields[settings.fieldName]) {
                                             return previous;
                                         }
@@ -219,6 +223,7 @@
                                     }
 
                                     const countnotempty = function(previous, current) {
+                                        logInfo("In countnotempty: " + current);
                                         if (!current.fields[settings.fieldName]) {
                                             return previous;
                                         }

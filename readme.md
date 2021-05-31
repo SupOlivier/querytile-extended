@@ -49,8 +49,24 @@ If you have some ideas for this widget to evolve, don't be shy and contact me on
 The [code](https://github.com/arsenikstiger/querytile-extended) is open sourced under the [MIT license](license.md). We love and encourage community contributions.
 
 ## For developper
+### packaging
 To package just execute
 ```powershell
 tfx extension create --manifest-globs vss-extension.json
 ```
 
+### Logs in console
+To enable log Infos level, add info in the uri
+````
+https://<server>/<collection>/<project>/_dashboards/dashboard/<dashboard guid>?info
+````
+
+To enable log Infos level, add debug in the uri
+````
+https://<server>/<collection>/<project>/_dashboards/dashboard/<dashboard guid>?debug
+````
+
+with both
+````
+https://<server>/<collection>/<project>/_dashboards/dashboard/<dashboard guid>?info&debug
+````
