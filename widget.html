@@ -188,7 +188,7 @@
 
                                     logInfo("settings.fieldName: " + settings.fieldName);
 
-
+                                    logInfo("settings.workItemTypeConsideredList: " + settings.workItemTypeConsideredList);
                                     var workItemTypeConsideredArr = settings.workItemTypeConsideredList.split(',');
 
                                     function checkIfWorkItemTypeIsConsidered(workItemType)
@@ -365,6 +365,13 @@
                         || !settings.color) {
                         logDebug("settings.color sets to default");
                         settings.color = "#000000";
+                    }
+
+                    //Sets default value
+                    if (!settings
+                        || !settings.workItemTypeConsideredList) {
+                        logDebug("settings.workItemTypeConsideredList sets to default");
+                        settings.workItemTypeConsideredList = "";
                     }
 
                     //Sets title

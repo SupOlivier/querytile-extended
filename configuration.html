@@ -255,7 +255,7 @@
 							unit: $unitInput.val(),
 							backgroundColor: $colorPickerCombo.css("background-color"),
 							color: $colorPickerCombo.css("color"),
-							workItemTypeConsideredList: "Task,Bug"
+							workItemTypeConsideredList: $workItemTypeConsideredListInput.val()
 						})
 					};
 					logInfo(customSettings);
@@ -289,6 +289,8 @@
 				var $colorPickerCombo = $(".color-picker-combo");
 
 				var $colorPickerPaletteSingleColor = $(".color-picker-palette-single-color");
+
+				var $workItemTypeConsideredListInput = $("#workItemTypeConsideredList-input");
 
 				return {
 					load: function (widgetSettings, widgetConfigurationContext) {
@@ -330,6 +332,11 @@
 						if (settings && settings.backgroundColor && settings.color) {
 							applyBackgroundColor(settings.backgroundColor, settings.color);
 						}
+
+						if (settings && settings.workItemTypeConsideredList) {
+                            $workItemTypeConsideredListInput.val(settings.workItemTypeConsideredList);
+                        }
+
 
 						populateQueries();
 
@@ -599,6 +606,12 @@
 				</div>
 			</div>
 		</fieldset>
+        <fieldset>
+            <div class="single-line-text-input">
+                <label>Work Item Type Considered</label>
+                <input id="workItemTypeConsideredList-input" type="text">List of work item type separate by a coma. Empty considere as all.</input>
+            </div>
+        </fieldset>
 	</div>
 </body>
 
