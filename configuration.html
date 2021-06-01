@@ -402,6 +402,14 @@
 							picker.toggle();
 						});
 
+						$workItemTypeConsideredListInput.on("input", function () {
+                                notifySettingsUpdate(widgetConfigurationContext);
+                        });
+
+                        $workItemTypeConsideredListInput.on("change", function () {
+                                notifySettingsUpdate(widgetConfigurationContext);
+                        });
+
 						return WidgetHelpers.WidgetStatusHelper.Success();
 					},
 					onSave: function () {
