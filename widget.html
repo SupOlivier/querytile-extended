@@ -20,7 +20,7 @@
             catch (exception) {
                 console.log("unable to configure Log");
                 debug = false;
-				info = false;
+                info = false;
             }
         }
 
@@ -118,19 +118,19 @@
 
 
                             var queryResultCount = 0;
-							switch (queryByIdResult.queryResultType) {
-								case 1:
-									queryResultCount = queryByIdResult.workItems.length;
-									logDebug("queryByIdResult.workItems.length: " + queryByIdResult.workItems.length);
-									break;
-								case 2:
-									queryResultCount = queryByIdResult.workItemRelations.length
-									logDebug("queryByIdResult.workItemRelations.length: " + queryByIdResult.workItemRelations.length);
-									break;
-							}
-							
-							var $workitems = $("#workitems");
-                            $workitems.text(queryResultCount + " WI");                            
+                            switch (queryByIdResult.queryResultType) {
+                                case 1:
+                                    queryResultCount = queryByIdResult.workItems.length;
+                                    logDebug("queryByIdResult.workItems.length: " + queryByIdResult.workItems.length);
+                                    break;
+                                case 2:
+                                    queryResultCount = queryByIdResult.workItemRelations.length
+                                    logDebug("queryByIdResult.workItemRelations.length: " + queryByIdResult.workItemRelations.length);
+                                    break;
+                            }
+
+                            var $workitems = $("#workitems");
+                            $workitems.text(queryResultCount + " WI");
                             //$workitems.html(queryResultCount + " WI <BR>" + queryTypeString);
 
                             //TODO : Si aucun élément, on renvoie directement
@@ -143,18 +143,18 @@
                             }
 
                             var workItemIds = [];
-							switch (queryByIdResult.queryResultType) {
-								case 1:
-									queryByIdResult.workItems.forEach(function (workItem) {
-										workItemIds.push(workItem.id);
-									});
-									break;
-								case 2:
-									queryByIdResult.workItemRelations.forEach(function (workItemRelation) {
-										workItemIds.push(workItemRelation.target.id);
-									});
-									break;
-							}
+                            switch (queryByIdResult.queryResultType) {
+                                case 1:
+                                    queryByIdResult.workItems.forEach(function (workItem) {
+                                        workItemIds.push(workItem.id);
+                                    });
+                                    break;
+                                case 2:
+                                    queryByIdResult.workItemRelations.forEach(function (workItemRelation) {
+                                        workItemIds.push(workItemRelation.target.id);
+                                    });
+                                    break;
+                            }
 
                             var fields = [];
                             fields.push("System.WorkItemType");
@@ -163,11 +163,11 @@
                             var promises = [];
                             var workItemIdsBatch = [];
 
-                            for(var i = 1; i <= workItemIds.length; i++){
+                            for (var i = 1; i <= workItemIds.length; i++) {
 
                                 workItemIdsBatch.push(workItemIds[i - 1]);
 
-                                if(i % 200 == 0 || i == workItemIds.length){
+                                if (i % 200 == 0 || i == workItemIds.length) {
                                     promises.push(RestClient.getClient().getWorkItems(workItemIdsBatch, fields));
                                     workItemIdsBatch = [];
                                 }
@@ -179,10 +179,10 @@
 
                                     var getWorkItemsResult = [];
 
-                                    results.forEach(function(result){
+                                    results.forEach(function (result) {
                                         getWorkItemsResult = getWorkItemsResult.concat(result);
                                     });
-								
+
                                     logInfo("RestClient.getClient().getWorkItems(" + workItemIds + ", " + fields + "):");
                                     logInfo(getWorkItemsResult);
 
@@ -191,8 +191,7 @@
                                     logInfo("settings.workItemTypeConsideredList: " + settings.workItemTypeConsideredList);
                                     var workItemTypeConsideredArr = settings.workItemTypeConsideredList.split(',');
 
-                                    function checkIfWorkItemTypeIsConsidered(workItemType)
-                                    {
+                                    function checkIfWorkItemTypeIsConsidered(workItemType) {
                                         if (workItemTypeConsideredArr.length > 0) {
                                             return (workItemTypeConsideredArr.indexOf(workItemType) > -1);
                                         } else {
@@ -200,55 +199,70 @@
                                         }
                                     }
 
-                                    const sum = function(previous, current) {
+                                    const sum = function (previous, current) {
                                         logInfo("In sum");
                                         logDebug(current);
-                                        if (!current.fields[settings.fieldName]) {
-                                            return previous;
+                                        if (checkIfWorkItemTypeIsConsidered(current.fields["System.WorkItemType"])) {
+                                            if (!current.fields[settings.fieldName]) {
+                                                return previous;
+                                            }
+                                            var currentValue = current.fields[settings.fieldName];
+                                            return previous + currentValue;
                                         }
-                                        var currentValue = current.fields[settings.fieldName];
-                                        return previous + currentValue;
+                                        return previous
                                     }
 
-                                    const highest = function(previous, current) {
+                                    const highest = function (previous, current) {
                                         logInfo("In highest");
                                         logDebug(current);
-                                        if (!current.fields[settings.fieldName]) {
-                                            return previous;
+                                        if (checkIfWorkItemTypeIsConsidered(current.fields["System.WorkItemType"])) {
+                                            if (!current.fields[settings.fieldName]) {
+                                                return previous;
+                                            }
+                                            var currentValue = current.fields[settings.fieldName];
+                                            return previous > currentValue ? previous : currentValue;
                                         }
-                                        var currentValue = current.fields[settings.fieldName];
-                                        return previous > currentValue ? previous : currentValue;
+                                        return previous;
                                     }
 
-                                    const lowest = function(previous, current) {
+                                    const lowest = function (previous, current) {
                                         logInfo("In lowest");
                                         logDebug(current);
-                                        if (!current.fields[settings.fieldName]) {
-                                            return previous;
+                                        if (checkIfWorkItemTypeIsConsidered(current.fields["System.WorkItemType"])) {
+                                            if (!current.fields[settings.fieldName]) {
+                                                return previous;
+                                            }
+                                            var currentValue = current.fields[settings.fieldName];
+                                            return previous > -currentValue ? previous : -currentValue;
                                         }
-                                        var currentValue = current.fields[settings.fieldName];
-                                        return previous > -currentValue ? previous : -currentValue;
+                                        return previous;
                                     }
 
-                                    const countempty = function(previous, current) {
+                                    const countempty = function (previous, current) {
                                         logInfo("In countempty");
                                         logDebug(current);
-                                        if (current.fields[settings.fieldName]) {
-                                            return previous;
+                                        if (checkIfWorkItemTypeIsConsidered(current.fields["System.WorkItemType"])) {
+                                            if (current.fields[settings.fieldName]) {
+                                                return previous;
+                                            }
+                                            return previous + 1;
                                         }
-                                        return previous + 1;
+                                        return previous;
                                     }
 
-                                    const countnotempty = function(previous, current) {
+                                    const countnotempty = function (previous, current) {
                                         logInfo("In countnotempty");
                                         logDebug(current);
-                                        if (!current.fields[settings.fieldName]) {
-                                            return previous;
+                                        if (checkIfWorkItemTypeIsConsidered(current.fields["System.WorkItemType"])) {
+                                            if (!current.fields[settings.fieldName]) {
+                                                return previous;
+                                            }
+                                            return previous + 1;
                                         }
-                                        return previous + 1;
+                                        return previous;
                                     }
 
-                                    const countworkItemTypeConsidered = function(previous, current) {
+                                    const countworkItemTypeConsidered = function (previous, current) {
                                         logInfo("In countworkItemTypeConsidered");
                                         logDebug(current);
                                         if (checkIfWorkItemTypeIsConsidered(current.fields["System.WorkItemType"])) {
@@ -258,7 +272,7 @@
                                     }
 
                                     if (settings.workItemTypeConsideredList) {
-                                        $workitems.text(queryResultCount + " WI (" + getWorkItemsResult.reduce(countworkItemTypeConsidered, 0) + ")");
+                                        $workitems.text("Considered " + getWorkItemsResult.reduce(countworkItemTypeConsidered, 0) + " of " + queryResultCount + " WIs");
                                     }
 
                                     var aggregation = 0;
@@ -280,7 +294,11 @@
                                             logInfo(aggregation);
                                             break;
                                         case "average":
-                                            aggregation = getWorkItemsResult.reduce(sum, 0) / getWorkItemsResult.length;
+                                            if (settings.workItemTypeConsideredList) {
+                                                aggregation = getWorkItemsResult.reduce(sum, 0) / getWorkItemsResult.reduce(countworkItemTypeConsidered, 0);
+                                            } else {
+                                                aggregation = getWorkItemsResult.reduce(sum, 0) / getWorkItemsResult.length;
+                                            }
                                             logInfo("average:");
                                             logInfo(aggregation);
                                             break;
