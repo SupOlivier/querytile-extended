@@ -195,7 +195,7 @@
                                         if (workItemTypeConsideredArr.length > 0) {
                                             return (workItemTypeConsideredArr.indexOf(workItemType) > -1);
                                         } else {
-                                            return true;
+                                            return (1 === 1);
                                         }
                                     }
 
@@ -271,9 +271,10 @@
                                         return previous;
                                     }
 
-                                    if (settings.workItemTypeConsideredList) {
-                                        $workitems.text("Considered " + getWorkItemsResult.reduce(countworkItemTypeConsidered, 0) + " of " + queryResultCount + " WIs");
-                                    }
+                                    logInfo("Considered WI: " + getWorkItemsResult.reduce(countworkItemTypeConsidered, 0));
+                                    //if (settings.workItemTypeConsideredList) {
+                                        $workitems.text(getWorkItemsResult.reduce(countworkItemTypeConsidered, 0) + " of " + queryResultCount + " WIs");
+                                    //}
 
                                     var aggregation = 0;
 
