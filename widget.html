@@ -188,9 +188,21 @@
 
                                     logInfo("settings.fieldName: " + settings.fieldName);
 
+
+                                    var workItemTypeConsideredArr = settings.workItemTypeConsideredList.split(',');
+
+                                    function checkIfWorkItemTypeIsConsidered(workItemType)
+                                    {
+                                        if (workItemTypeConsideredArr.length > 0) {
+                                            return (workItemTypeConsideredArr.indexOf(workItemType) > -1);
+                                        } else {
+                                            return true;
+                                        }
+                                    }
+
                                     const sum = function(previous, current) {
-                                        logInfo("In sum: ");
-                                        logInfo(current);
+                                        logInfo("In sum");
+                                        logDebug(current);
                                         if (!current.fields[settings.fieldName]) {
                                             return previous;
                                         }
@@ -199,8 +211,8 @@
                                     }
 
                                     const highest = function(previous, current) {
-                                        logInfo("In highest: ");
-                                        logInfo(current);
+                                        logInfo("In highest");
+                                        logDebug(current);
                                         if (!current.fields[settings.fieldName]) {
                                             return previous;
                                         }
@@ -209,8 +221,8 @@
                                     }
 
                                     const lowest = function(previous, current) {
-                                        logInfo("In lowest: ");
-                                        logInfo(current);
+                                        logInfo("In lowest");
+                                        logDebug(current);
                                         if (!current.fields[settings.fieldName]) {
                                             return previous;
                                         }
@@ -219,8 +231,8 @@
                                     }
 
                                     const countempty = function(previous, current) {
-                                        logInfo("In countempty: ");
-                                        logInfo(current);
+                                        logInfo("In countempty");
+                                        logDebug(current);
                                         if (current.fields[settings.fieldName]) {
                                             return previous;
                                         }
@@ -228,12 +240,25 @@
                                     }
 
                                     const countnotempty = function(previous, current) {
-                                        logInfo("In countnotempty: ");
-                                        logInfo(current);
+                                        logInfo("In countnotempty");
+                                        logDebug(current);
                                         if (!current.fields[settings.fieldName]) {
                                             return previous;
                                         }
                                         return previous + 1;
+                                    }
+
+                                    const countworkItemTypeConsidered = function(previous, current) {
+                                        logInfo("In countworkItemTypeConsidered");
+                                        logDebug(current);
+                                        if (checkIfWorkItemTypeIsConsidered(current.fields["System.WorkItemType"])) {
+                                            return previous + 1;
+                                        }
+                                        return previous;
+                                    }
+
+                                    if (settings.workItemTypeConsideredList) {
+                                        $workitems.text(queryResultCount + " WI (" + getWorkItemsResult.reduce(countworkItemTypeConsidered, 0) + ")");
                                     }
 
                                     var aggregation = 0;
