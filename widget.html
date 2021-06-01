@@ -189,7 +189,14 @@
                                     logInfo("settings.fieldName: " + settings.fieldName);
 
                                     logInfo("settings.workItemTypeConsideredList: " + settings.workItemTypeConsideredList);
-                                    var workItemTypeConsideredArr = settings.workItemTypeConsideredList.split(',');
+                                    var workItemTypeConsideredArr = [];
+
+                                    if (settings.workItemTypeConsideredList) {
+                                        logInfo("Convert workItemTypeConsideredList to Array.");
+                                        workItemTypeConsideredArr = settings.workItemTypeConsideredList.split(',');
+                                    }
+
+                                    logInfo("workItemTypeConsideredArr.length: " + workItemTypeConsideredArr.length);
 
                                     function checkIfWorkItemTypeIsConsidered(workItemType) {
                                         if (workItemTypeConsideredArr.length > 0) {
@@ -273,7 +280,7 @@
 
                                     logInfo("Considered WI: " + getWorkItemsResult.reduce(countworkItemTypeConsidered, 0));
                                     //if (settings.workItemTypeConsideredList) {
-                                        $workitems.text(getWorkItemsResult.reduce(countworkItemTypeConsidered, 0) + " of " + queryResultCount + " WIs");
+                                    $workitems.text(getWorkItemsResult.reduce(countworkItemTypeConsidered, 0) + " of " + queryResultCount + " WIs");
                                     //}
 
                                     var aggregation = 0;
